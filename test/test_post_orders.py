@@ -1,9 +1,7 @@
 import json
 import sys
-from _decimal import Decimal
 from typing import Callable
 
-import faker
 import pytest
 
 from const.messages import ErrorMessage
@@ -74,29 +72,37 @@ def test_post_order_with_to_big_quantity_negative(
     client: Callable, orders_with_all_status: Callable
 ) -> None:
     previous_object_count = orders_input_collection.estimated_document_count()
-    response = client.post(url="/orders", json={"stoks": fake.text(), "quantity": sys.float_info.max})
+    response = client.post(
+        url="/orders", json={"stoks": fake.text(), "quantity": sys.float_info.max}
+    )
     assert_negative_response(
         response, None, ErrorMessage.WRONG_QUANTITY_DATA, previous_object_count
     )
-    response = client.post(url="/orders", json={"stoks": fake.text(), "quantity": -sys.float_info.max})
+    response = client.post(
+        url="/orders", json={"stoks": fake.text(), "quantity": -sys.float_info.max}
+    )
     assert_negative_response(
         response, None, ErrorMessage.WRONG_QUANTITY_DATA, previous_object_count
     )
 
 
-@pytest.mark.priority_0
-@pytest.mark.parametrize("body,message", [({"stoks": ""}, ErrorMessage.NO_DATA),
-                          ({"quantity": 0}, ErrorMessage.NO_DATA),
-                          ({}, ErrorMessage.NO_DATA),
-                          ({"stoks": "", "quantity": 0}, ErrorMessage.WRONG_DATA)])
+@pytest.mark.priority_1
+@pytest.mark.parametrize(
+    "body,message",
+    [
+        ({"stoks": ""}, ErrorMessage.NO_DATA),
+        ({"quantity": 0}, ErrorMessage.NO_DATA),
+        ({}, ErrorMessage.NO_DATA),
+        ({"stoks": "", "quantity": 0}, ErrorMessage.WRONG_DATA),
+        ({"jhgjgj": "njkhk", "quantity": "kkljl"}, ErrorMessage.WRONG_DATA),
+    ],
+)
 def test_post_order_with_empty_fields_negative(
     client: Callable, orders_with_all_status: Callable, body, message
 ) -> None:
     previous_object_count = orders_input_collection.estimated_document_count()
     response = client.post(url="/orders", json=body)
-    assert_negative_response(
-        response, None, message, previous_object_count
-    )
+    assert_negative_response(response, body, message, previous_object_count)
 
 
 @pytest.mark.priority_1

@@ -1,9 +1,6 @@
-import random
-import time
 from typing import Any, Dict, List, Union
 
 import uvicorn
-from bson.errors import InvalidId
 from fastapi import FastAPI
 from fastapi.exceptions import HTTPException, RequestValidationError
 from starlette.background import BackgroundTasks
@@ -14,12 +11,11 @@ from model.database import (
     create_order_input,
     create_order_output,
     delete_by_order_id,
-    get_by_id_input_order,
     get_by_id_output_order,
     orders_input_collection,
     update_status,
 )
-from model.orders import OrderInput, OrderOutput
+from model.orders import OrderInput
 from utils import success_order_input_response, success_output_input_response
 
 app = FastAPI()
@@ -61,7 +57,10 @@ async def create_order(
 ) -> str:
     order_id = create_order_input(order)
     if not order.stoks or order.quantity == 0:
-        raise HTTPException(status_code=400, detail=ErrorMessage.WRONG_DATA.value.format(response_data=order))
+        raise HTTPException(
+            status_code=400,
+            detail=ErrorMessage.WRONG_DATA.value.format(response_data=order),
+        )
     background_tasks.add_task(update_status, order_id)
     create_order_output(order, order_id)
     return success_order_input_response(order_id)
@@ -70,8 +69,11 @@ async def create_order(
 @app.delete("/orders/{order_id}")
 def delete_order(order_id: str) -> str:
     output_order = delete_by_order_id(order_id)
-    output_order.pop("_id")
-    return success_output_input_response(output_order)
+    if output_order:
+        output_order.pop("_id")
+        return success_output_input_response(output_order)
+    else:
+        raise HTTPException(status_code=404, detail=ErrorMessage.ORDER_NOT_FOUND.value)
 
 
 if __name__ == "__main__":

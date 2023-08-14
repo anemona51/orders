@@ -1,6 +1,7 @@
 from typing import List, Union
 
 from httpx import Response
+from pymongo.results import DeleteResult
 
 from const.messages import ErrorMessage
 from model.assert_massages import AssertMessages

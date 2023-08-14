@@ -15,5 +15,6 @@ class ErrorMessage(Enum):
 map_errors = {
     "model_attributes_type": ErrorMessage.WRONG_DATA.value,
     "missing": ErrorMessage.NO_DATA.value,
-    "int_parsing_size": ErrorMessage.WRONG_QUANTITY_DATA.value
+    "int_parsing_size": ErrorMessage.WRONG_QUANTITY_DATA.value,
+    "int_parsing": ErrorMessage.WRONG_DATA.value,
 }

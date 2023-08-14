@@ -2,6 +2,7 @@ import json
 
 import faker
 import pytest
+from bson import ObjectId
 from starlette.testclient import TestClient
 
 from main import app
@@ -10,6 +11,7 @@ from model.database import (
     create_order_input,
     create_order_output,
     get_random_state,
+    orders_input_collection,
 )
 from model.orders import OrderInput, State
 
@@ -17,7 +19,7 @@ fake = faker.Faker()
 
 
 @pytest.fixture()
-def client():
+def client() -> TestClient:
     client = TestClient(app)
     yield client
 
@@ -41,9 +43,9 @@ def orders_with_all_status() -> str:
         order_input = OrderInput(stoks=stoks, quantity=quantity)
         input_id = create_order_input(order_input)
         create_order_output(order_input, input_id, status=status.value)
-    yield OrderInput(
-        stoks=fake.currency_code(), quantity=fake.pyint()
-    ).model_dump()
+        if status == State.CANCELED:
+            orders_input_collection.delete_one({"_id": ObjectId(input_id)})
+    yield OrderInput(stoks=fake.currency_code(), quantity=fake.pyint()).model_dump()
     clean_db()
 
 
@@ -54,10 +56,11 @@ def one_hundred_order_outputs() -> str:
         quantity = fake.pyint()
         order_input = OrderInput(stoks=stoks, quantity=quantity)
         input_id = create_order_input(order_input)
-        create_order_output(order_input, input_id, status=get_random_state())
-    yield OrderInput(
-        stoks=fake.currency_code(), quantity=fake.pyint()
-    ).model_dump()
+        status = get_random_state()
+        create_order_output(order_input, input_id, status=status)
+        if status == State.CANCELED:
+            orders_input_collection.delete_one({"_id": ObjectId(input_id)})
+    yield OrderInput(stoks=fake.currency_code(), quantity=fake.pyint()).model_dump()
     clean_db()
 
 

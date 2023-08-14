@@ -22,6 +22,10 @@ class OrderOutput(BaseModel):
     status: str
 
 
+class OrderId(BaseModel):
+    input_id: str
+
+
 class Error(BaseModel):
     code: int
     message: str

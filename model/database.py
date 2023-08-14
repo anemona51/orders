@@ -1,9 +1,10 @@
 import random
 import time
-from typing import Union, List, Dict
+from typing import Union, List, Dict, Any, Mapping
 
 from bson import ObjectId
 from pymongo import MongoClient
+from pymongo.collection import Collection
 
 from model.orders import OrderInput, OrderOutput, State
 
@@ -71,8 +72,12 @@ def update_status(order_id: str, state: Union[str, None] = None) -> None:
 
 
 def delete_by_order_id(order_id: str) -> Dict[str, str]:
-    update_status(order_id, State.CANCELED)
-    return get_by_id_input_order(order_id)
+    output_order = update_status(order_id, State.CANCELED)
+    if output_order:
+        orders_input_collection.delete_one({"_id": ObjectId(order_id)})
+        return get_by_id_output_order(order_id)
+    else:
+        return output_order
 
 
 def clean_db() -> None:
