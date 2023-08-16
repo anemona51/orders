@@ -2,7 +2,7 @@ import json
 
 from httpx import Response
 
-from const.messages import SuccessMessage
+from app.const.messages import SuccessMessage
 
 
 def success_order_input_response(order_id: str) -> str:

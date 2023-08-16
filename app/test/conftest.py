@@ -6,14 +6,14 @@ from bson import ObjectId
 from starlette.testclient import TestClient
 
 from main import app
-from model.database import (
+from app.model.database import (
     clean_db,
     create_order_input,
     create_order_output,
     get_random_state,
     orders_input_collection,
 )
-from model.orders import OrderInput, State
+from app.model.orders import OrderInput, State
 
 fake = faker.Faker()
 

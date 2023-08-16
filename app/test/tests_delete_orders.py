@@ -2,20 +2,20 @@ from typing import Callable
 
 import pytest
 
-from const.messages import ErrorMessage, SuccessMessage
-from model.assert_massages import AssertMessages
-from model.database import (
+from app.const.messages import ErrorMessage, SuccessMessage
+from app.model.assert_massages import AssertMessages
+from app.model.database import (
     get_all_output_order,
     orders_output_collection,
     orders_input_collection,
     get_by_id_output_order,
 )
-from model.orders import State
-from test.test_utils import (
+from app.model.orders import State
+from app.test.test_utils import (
     assert_status_failed,
     assert_status_success,
 )
-from utils import response_to_dict
+from app.utils import response_to_dict
 
 
 @pytest.mark.priority_0

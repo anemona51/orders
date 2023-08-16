@@ -1,17 +1,17 @@
-from test.conftest import fake
-from test.test_utils import assert_status_failed, assert_status_success
+from app.test.conftest import fake
+from app.test.test_utils import assert_status_failed, assert_status_success
 from typing import Callable
 
 import pytest
 
-from const.messages import ErrorMessage, SuccessMessage
-from model.assert_massages import AssertMessages
-from model.database import (
+from app.const.messages import ErrorMessage, SuccessMessage
+from app.model.assert_massages import AssertMessages
+from app.model.database import (
     get_all_output_order,
     get_by_id_output_order,
     orders_output_collection,
 )
-from utils import get_input_order_id, response_to_dict
+from app.utils import get_input_order_id, response_to_dict
 
 
 @pytest.mark.priority_0

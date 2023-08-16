@@ -4,17 +4,17 @@ from typing import Callable
 
 import pytest
 
-from const.messages import ErrorMessage
-from model.assert_massages import AssertMessages
-from model.database import (
+from app.const.messages import ErrorMessage
+from app.model.assert_massages import AssertMessages
+from app.model.database import (
     get_all_output_order,
     get_by_id_input_order,
     get_by_id_output_order,
     orders_input_collection,
     orders_output_collection,
 )
-from model.orders import State
-from utils import get_input_order_id
+from app.model.orders import State
+from app.utils import get_input_order_id
 from .conftest import fake
 
 from .test_utils import assert_negative_response, assert_status_success

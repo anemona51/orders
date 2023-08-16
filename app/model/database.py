@@ -1,12 +1,11 @@
 import random
 import time
-from typing import Union, List, Dict, Any, Mapping
+from typing import Union, List, Dict
 
 from bson import ObjectId
 from pymongo import MongoClient
-from pymongo.collection import Collection
 
-from model.orders import OrderInput, OrderOutput, State
+from app.model.orders import OrderInput, OrderOutput, State
 
 db_client = MongoClient("localhost", 27017)
 orders_db = db_client["orders_database"]

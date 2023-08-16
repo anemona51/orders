@@ -1,11 +1,10 @@
 from typing import List, Union
 
 from httpx import Response
-from pymongo.results import DeleteResult
 
-from const.messages import ErrorMessage
-from model.assert_massages import AssertMessages
-from model.database import orders_input_collection
+from app.const.messages import ErrorMessage
+from app.model.assert_massages import AssertMessages
+from app.model.database import orders_input_collection
 
 
 def assert_status_failed(

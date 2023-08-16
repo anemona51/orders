@@ -1,11 +1,11 @@
 from random import choice
-from test.test_utils import assert_get_all_success, assert_status_success
+from app.test.test_utils import assert_get_all_success, assert_status_success
 from typing import Callable
 
 import pytest
 
-from model.assert_massages import AssertMessages
-from model.database import (
+from app.model.assert_massages import AssertMessages
+from app.model.database import (
     get_all_input_order,
     get_all_output_order,
     orders_input_collection,
