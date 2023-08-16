@@ -21,4 +21,3 @@ With docker:
 6. install docker desktop, run docker
 7. docker build -t myimage . 
 8. docker compose up
-8. pytest --html=report.html
