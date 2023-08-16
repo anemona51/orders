@@ -15,5 +15,5 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
 
 #
 CMD ["pip list"]
-CMD ["pytest", "--html", "report.html"]
+CMD ["pytest", "--html", "reports/report.html"]
 #ENTRYPOINT ["sh", "/tmp/entrypoint.sh" ]
