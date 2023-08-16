@@ -19,6 +19,5 @@ With docker:
 4. install dependencies: pip install -r requirements.txt
 5. install wsl: wsl --install
 6. install docker desktop, run docker
-7. docker build -t myimage . 
-8. docker compose build --no-cache
-9. docker compose up --abort-on-container-exit
+7. docker compose build --no-cache
+8. docker compose up --abort-on-container-exit
