@@ -13,11 +13,6 @@ Without docker
 8. pytest --html=report.html
 
 With docker:
-1. install python3.8
-2. create env: python3 -m venv env
-3. activate env: .\env\Scripts\activate 
-4. install dependencies: pip install -r requirements.txt
-5. install wsl: wsl --install
-6. install docker desktop, run docker
-7. docker compose build --no-cache
-8. docker compose up --abort-on-container-exit
+1. install docker desktop, run docker
+2. docker compose build --no-cache
+3. docker compose up --abort-on-container-exit
