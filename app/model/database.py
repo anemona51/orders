@@ -7,7 +7,9 @@ from pymongo import MongoClient
 
 from app.model.orders import OrderInput, OrderOutput, State
 
-db_client = MongoClient("localhost", 27017)
+import os
+
+db_client = MongoClient(os.environ.get('MONGO_HOST', 'localhost'), 27017)
 orders_db = db_client["orders_database"]
 orders_input_collection = orders_db["orders_input"]
 orders_output_collection = orders_db["orders_output"]

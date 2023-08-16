@@ -20,4 +20,5 @@ With docker:
 5. install wsl: wsl --install
 6. install docker desktop, run docker
 7. docker build -t myimage . 
-8. docker compose up
+8. docker compose build --no-cache
+9. docker compose up --abort-on-container-exit

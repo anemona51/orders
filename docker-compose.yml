@@ -2,14 +2,16 @@ version: "3"
 services:
   app:
     container_name: app
-    restart: always
-    build: /Users/anemona/PycharmProjects/orders/
+    restart: no
+    build: .
     ports:
       - "3000:3000"
     links:
       - mongo
     depends_on:
       - mongo
+    environment:
+      - MONGO_HOST=mongo
   mongo:
     container_name: mongo
     image: mongo
